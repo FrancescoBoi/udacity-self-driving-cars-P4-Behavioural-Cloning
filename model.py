@@ -50,13 +50,12 @@ def generator2(samples, batch_size=batch_size):
                 angles.append(right_angle)
                 angles.append(-1*right_angle)
                 images.append(cv2.flip(right_img, 1))
-            # trim image to only see section with road
             X_train = np.array(images)
             y_train = np.array(angles)
             yield sklearn.utils.shuffle(X_train, y_train)
 
 
-data_folder = "P3CompleteData"
+data_folder = "P4Data"
 samples = []
 with open(os.path.join(data_folder, 'driving_log.csv')) as csvfile:
     reader = csv.reader(csvfile)
@@ -70,7 +69,6 @@ train_generator = generator2(train_samples, batch_size=batch_size)
 validation_generator = generator2(validation_samples, batch_size=batch_size)
 
 drop_prob = 0.25
-#min_lr= 1e-12
 n_epochs = 20
 class mycb(keras.callbacks.Callback):
     def on_epoch_begin(self, epoch, logs=None):
@@ -97,16 +95,14 @@ model.add(Dense(100, activation='relu'))
 model.add(Dropout(rate=drop_prob))
 model.add(Dense(50, activation='relu'))
 model.add(Dropout(rate=drop_prob))
-#model.add(keras.layers.LeakyReLU())
+#model.add(keras.layers.LeakyReLU()) #
 model.add(Dense(10, activation='relu'))
 #model.add(Dropout(rate=drop_prob))
-#model.add(keras.layers.LeakyReLU())e
+#model.add(keras.layers.LeakyReLU())
 model.add(Dense(1))
 model.compile(loss='mse', optimizer=optimizer)
-#import pdb; pdb.set_trace()
 train_stps_epoch = 3*2*len(train_samples)//batch_size #approx
 val_stps_epoch = 3*2*len(validation_samples)//batch_size #approx
-#import pdb; pdb.set_trace()
 history = model.fit_generator(train_generator,
     validation_data=validation_generator, epochs=n_epochs,
     steps_per_epoch=train_stps_epoch, validation_steps=val_stps_epoch,
@@ -114,4 +110,4 @@ history = model.fit_generator(train_generator,
     callbacks=[cb])
 with open('trainHistoryDict', 'wb') as file_pi:
     pickle.dump(history.history, file_pi)
-model.save("model_nvidia_generator_extra_data_NOactLastLayer_batch32_Dense100_10epochs_lr_1e3_dropProb025.h5")
+model.save("model.h5")
