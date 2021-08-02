@@ -138,7 +138,7 @@ pip install protobuf==3.14.0
 pip install pyasn1==0.4.8
 pip install pyasn1-modules==0.2.8
 pip install python-gnupg==0.4.6
-pip install python-ldap==3.3.1 x
+pip install python-ldap==3.3.1
 pip install pyyaml==5.3.1
 pip install requests==2.25.0
 pip install scipy==1.4.1
@@ -223,6 +223,9 @@ python video.py run1 --fps 48
 
 Will run the video at 48 FPS. The default FPS is 60.
 
+#### Possible issue
+On MacOSX there might be some issues with moviepy and/or ffmpeg versions of the virtual environment. If so, it is better to install `moviepy` with `pip` in the default version of you OS or create another virtual env. Trying to fix this problem in the project virtual environment might result in corrupting the environment itself.
+
 #### Why create a video
 
 1. It's been noted the simulator might perform differently based on the hardware. So if your model drives succesfully on your machine it might not on another machine (your reviewer). Saving a video is a solid backup in case this happens.
@@ -230,5 +233,6 @@ Will run the video at 48 FPS. The default FPS is 60.
 
 ### Additional information
 - Images are loaded in BGR colorspace using cv2 while drive.py load images in RGB to predict the steering angles.
+- If the laptop is slowed down, the simulaor and the `drive.py` do not work well. It is better to reboot the computer or turn it off and wait for a while if it is getting overheated.
 
 
