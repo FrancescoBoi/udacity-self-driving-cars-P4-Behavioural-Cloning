@@ -48,7 +48,7 @@ The simulator can be downloaded from the classroom. In the classroom, we have al
 
 #### Set TF1 Environment
 The project was developed Tensorflow1. The following steps allows to create a TF1 environment.
-* Create a conda virtual environment with the following command: `conda create -n yourenvname python=x.x anaconda`;
+* Create a conda virtual environment with the following command: `conda create --no-default-packages -n yourEnvName`;
 * Activate the virtual environment with `conda activate yourenvname`;
 * Run one by one the following commands:
 ```
